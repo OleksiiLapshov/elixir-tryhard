@@ -6,7 +6,7 @@ defmodule Servy.Handler do
     |> log
     |> route
     |> track
-    |> emojify
+    #|> emojify
     |> format_response
   end
 
@@ -51,6 +51,20 @@ defmodule Servy.Handler do
 
   def route(%{ method: "GET", path: "/wildthings" } = conv) do
     %{ conv | status: 200, resp_body: "Bears, Lions, Snakes"}
+  end
+
+  def route(%{ method: "GET", path: "/about" } = conv) do
+    file = Path.expand("../pages", __DIR__)
+           |> Path.join("about.html")
+
+    case File.read(file) do
+      {:ok, content} ->
+        %{conv | status: 200, resp_body: content}
+      {:error, :enoent} ->
+        %{ conv | status: 404, resp_body: "File not found"}
+      {:error, reason} ->
+        %{conv | status: 501, resp_body: "file error: #{reason}"}
+    end
   end
 
   def route(%{ method: "GET", path: "/bears" } = conv) do
@@ -138,6 +152,19 @@ IO.puts response
 
 request = """
 GET /bears?id=2 HTTP/1.1
+Host: example.com
+User-Agent: ExampleBrowser/1.0
+Accept: */*
+
+"""
+
+response = Servy.Handler.handle(request)
+
+IO.puts response
+
+
+request = """
+GET /about HTTP/1.1
 Host: example.com
 User-Agent: ExampleBrowser/1.0
 Accept: */*
