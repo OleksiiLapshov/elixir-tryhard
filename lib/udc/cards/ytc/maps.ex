@@ -1,33 +1,46 @@
 # ugly thing
 map = %{"name" => "felix", :age => 25, 1 => false}
-IO.puts(map[1]) # returns false
-IO.puts(map["name"]) #returns name
-IO.puts(inspect(map[:name])) # returns nil
-IO.puts(map[:age]) #returns number from map
+# returns false
+IO.puts(map[1])
+# returns name
+IO.puts(map["name"])
+# returns nil
+IO.puts(inspect(map[:name]))
+# returns number from map
+IO.puts(map[:age])
 
-#better syntax uses only atoms for keys
+# better syntax uses only atoms for keys
 better_map = %{name: "bobby", age: 19}
-IO.puts(better_map.name) #returns bobby
-IO.puts(better_map[:name]) #also returns bobby
-IO.puts(better_map.age) #returns int
+# returns bobby
+IO.puts(better_map.name)
+# also returns bobby
+IO.puts(better_map[:name])
+# returns int
+IO.puts(better_map.age)
 # IO.puts(inspect(better_map.not_exist)) not working
-IO.puts(inspect(better_map[:not_exist])) #returns nil... AAAAAAAAAAAAAAAAAAAAAAAA
+# returns nil... AAAAAAAAAAAAAAAAAAAAAAAA
+IO.puts(inspect(better_map[:not_exist]))
 
-#get things with Map.get
-IO.puts(inspect(Map.get(better_map, :name))) # returns name
-IO.puts(inspect(Map.get(better_map, :not_exist))) #returns nil
-#get and default
-IO.puts(inspect(Map.get(better_map, :not_exist, "hi!"))) #retuns default value instead of nonexistent
+# get things with Map.get
+# returns name
+IO.puts(inspect(Map.get(better_map, :name)))
+# returns nil
+IO.puts(inspect(Map.get(better_map, :not_exist)))
+# get and default
+# retuns default value instead of nonexistent
+IO.puts(inspect(Map.get(better_map, :not_exist, "hi!")))
 
-#put
-IO.puts(inspect(Map.put(better_map, :test, "test"))) # DOES NOT MUTATE! Creates new
-#reassign
+# put
+# DOES NOT MUTATE! Creates new
+IO.puts(inspect(Map.put(better_map, :test, "test")))
+# reassign
 better_map = Map.put(better_map, :test, "test")
 IO.puts(inspect(better_map))
 
-#edit
-%{ better_map | age: 100 } #again. does NOT MUTATE!
+# edit
+# again. does NOT MUTATE!
+%{better_map | age: 100}
 IO.puts(inspect(better_map))
-better_map = %{ better_map | age: 100 }
+better_map = %{better_map | age: 100}
 IO.puts(inspect(better_map))
 # %{ better_map | age: 100, non_existant: true } throws an error

@@ -3,5 +3,6 @@ defmodule Cards do
     "hi there"
   end
 end
+
 test = :active
 IO.puts("status: #{test}")
